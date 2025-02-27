@@ -16,10 +16,11 @@ This project is an interactive web page designed to provide an engaging user exp
 - CSS (including Tailwind CSS for styling)
 - JavaScript
 
-## How to Use
+## How to Make Your Version
 
 1. Clone the repository.
-2. Open `index.html` in your web browser.
+2. Open `index.html`.
+3. Change the script however you want.
 
 ## Contributing
 
