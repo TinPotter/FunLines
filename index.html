@@ -127,6 +127,22 @@
             opacity: 1;
             transform: translateY(0);
         }
+        .fact-box {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .fact-box.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
         .close {
             color: #aaa;
             float: right;
@@ -180,6 +196,12 @@
         </div>
     </div>
 
+    <!-- Fact Box -->
+    <div id="fact-box" class="fact-box">
+        <span class="close">&times;</span>
+        <p id="fact-text"></p>
+    </div>
+
     <script>
         const container = document.getElementById("lines-container");
         const progressBar = document.getElementById("progress");
@@ -188,6 +210,9 @@
         const modalText = document.getElementById("modal-text");
         const modalInput = document.getElementById("modal-input");
         const closeModal = document.getElementsByClassName("close")[0];
+        const factBox = document.getElementById("fact-box");
+        const factText = document.getElementById("fact-text");
+        const closeFactBox = factBox.getElementsByClassName("close")[0];
         const heroSection = document.getElementById("hero");
 
         const secrets = ["Hidden Treasure!", "Secret Code: 42", "Easter Egg Found!", "Lucky Number: 7", "Bonus Points!", "Mystery Solved!", "Hidden Feature Unlocked!", "You've Discovered Magic!", "Special Message!", "Golden Line!"];
@@ -205,29 +230,29 @@
 
                 if (Math.random() < 0.02) {
                     line.onclick = () => {
-                        showModal(secrets[Math.floor(Math.random() * secrets.length)]);
+                        showFactBox(secrets[Math.floor(Math.random() * secrets.length)]);
                     };
                 } else if (Math.random() < 0.05) {
                     line.innerHTML += ` <span class="animated-icon">🎉</span>`;
                 } else if (Math.random() < 0.05) {
                     line.onclick = () => {
-                        showModal(facts[Math.floor(Math.random() * facts.length)]);
+                        showFactBox(facts[Math.floor(Math.random() * facts.length)]);
                     };
                 } else if (Math.random() < 0.05) {
                     line.onclick = () => {
-                        showModal(jokes[Math.floor(Math.random() * jokes.length)]);
+                        showFactBox(jokes[Math.floor(Math.random() * jokes.length)]);
                     };
                 } else if (Math.random() < 0.05) {
                     line.onclick = () => {
-                        showModal(quotes[Math.floor(Math.random() * quotes.length)]);
+                        showFactBox(quotes[Math.floor(Math.random() * quotes.length)]);
                     };
                 } else if (Math.random() < 0.05) {
                     line.onclick = () => {
                         showModalWithInput("What is the capital of France?", (answer) => {
                             if (answer.toLowerCase() === "paris") {
-                                showModal("Correct!");
+                                showFactBox("Correct!");
                             } else {
-                                showModal("Wrong! The capital of France is Paris.");
+                                showFactBox("Wrong! The capital of France is Paris.");
                             }
                         });
                     };
@@ -282,15 +307,27 @@
             };
         }
 
+        function showFactBox(message) {
+            factText.textContent = message;
+            factBox.classList.add("show");
+        }
+
         closeModal.onclick = () => {
             modal.style.display = "none";
             modalContent.classList.remove("show");
+        };
+
+        closeFactBox.onclick = () => {
+            factBox.classList.remove("show");
         };
 
         window.onclick = (event) => {
             if (event.target == modal) {
                 modal.style.display = "none";
                 modalContent.classList.remove("show");
+            }
+            if (event.target == factBox) {
+                factBox.classList.remove("show");
             }
         };
 
