@@ -118,17 +118,14 @@
             width: 80%;
             max-width: 500px;
             position: relative;
-            animation: fadeIn 0.5s ease-in-out;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .modal-content.show {
+            opacity: 1;
+            transform: translateY(0);
         }
         .close {
             color: #aaa;
@@ -141,33 +138,6 @@
             color: black;
             text-decoration: none;
             cursor: pointer;
-        }
-        .text-box {
-            background-color: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 16px;
-            margin: 20px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: slideIn 0.5s ease-in-out forwards;
-        }
-        @keyframes slideIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .text-box-hidden {
-            animation: slideOut 0.5s ease-in-out forwards;
-        }
-        @keyframes slideOut {
-            to {
-                opacity: 0;
-                transform: translateY(20px);
-                display: none;
-            }
         }
     </style>
 </head>
@@ -203,7 +173,7 @@
 
     <!-- Modal Structure -->
     <div id="modal" class="modal">
-        <div class="modal-content">
+        <div id="modal-content" class="modal-content">
             <span class="close">&times;</span>
             <p id="modal-text"></p>
             <input type="text" id="modal-input" class="hidden border p-2 mt-4 w-full rounded">
@@ -214,6 +184,7 @@
         const container = document.getElementById("lines-container");
         const progressBar = document.getElementById("progress");
         const modal = document.getElementById("modal");
+        const modalContent = document.getElementById("modal-content");
         const modalText = document.getElementById("modal-text");
         const modalInput = document.getElementById("modal-input");
         const closeModal = document.getElementsByClassName("close")[0];
@@ -231,13 +202,6 @@
                 line.innerHTML = `Line ${i} <button class='btn' onclick='handleLineClick(${i})'>Click</button>`;
                 line.style.fontSize = `${Math.random() * 6 + 14}px`;
                 line.draggable = true;
-
-                if (i % 10 === 0) {
-                    const textBox = document.createElement("div");
-                    textBox.className = "text-box";
-                    textBox.innerText = "This is a professional text box that appears every 10 lines!";
-                    line.appendChild(textBox);
-                }
 
                 if (Math.random() < 0.02) {
                     line.onclick = () => {
@@ -298,6 +262,7 @@
             modalText.textContent = message;
             modalInput.classList.add("hidden");
             modal.style.display = "block";
+            modalContent.classList.add("show");
         }
 
         function showModalWithInput(question, callback) {
@@ -306,10 +271,12 @@
             modalInput.value = "";
             modalInput.focus();
             modal.style.display = "block";
+            modalContent.classList.add("show");
 
             modalInput.onkeydown = (event) => {
                 if (event.key === "Enter") {
                     modal.style.display = "none";
+                    modalContent.classList.remove("show");
                     callback(modalInput.value);
                 }
             };
@@ -317,11 +284,13 @@
 
         closeModal.onclick = () => {
             modal.style.display = "none";
+            modalContent.classList.remove("show");
         };
 
         window.onclick = (event) => {
             if (event.target == modal) {
                 modal.style.display = "none";
+                modalContent.classList.remove("show");
             }
         };
 
