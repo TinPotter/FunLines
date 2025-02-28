@@ -6,6 +6,40 @@
     <title>Fun Lines</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        body.dark {
+            background-color: #1f2937;
+            color: #e5e7eb;
+        }
+        body.dark .line {
+            border-bottom-color: #4b5563;
+        }
+        body.dark .line:hover {
+            background-color: #374151;
+        }
+        body.dark .highlight {
+            background-color: #4b5563;
+        }
+        body.dark .btn {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+        body.dark .btn:hover {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+        body.dark .progress-bar {
+            background-color: #4b5563;
+        }
+        body.dark .progress {
+            background-color: #3b82f6;
+        }
+        body.dark .modal-content, body.dark .fact-box {
+            background-color: #1f2937;
+            color: #e5e7eb;
+        }
+        body.dark .close {
+            color: #e5e7eb;
+        }
         .line {
             padding: 12px;
             border-bottom: 1px solid #d1d5db;
@@ -155,6 +189,23 @@
             text-decoration: none;
             cursor: pointer;
         }
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .theme-toggle:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-900">
@@ -169,6 +220,9 @@
             </ul>
         </div>
     </nav>
+
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" class="theme-toggle">Dark/White Theme</button>
 
     <!-- Hero Section -->
     <section class="h-screen flex items-center justify-center text-white text-center shadow-xl" id="hero">
@@ -214,6 +268,7 @@
         const factText = document.getElementById("fact-text");
         const closeFactBox = factBox.getElementsByClassName("close")[0];
         const heroSection = document.getElementById("hero");
+        const themeToggle = document.getElementById("theme-toggle");
 
         const secrets = ["Hidden Treasure!", "Secret Code: 42", "Easter Egg Found!", "Lucky Number: 7", "Bonus Points!", "Mystery Solved!", "Hidden Feature Unlocked!", "You've Discovered Magic!", "Special Message!", "Golden Line!"];
         const facts = ["The shortest war in history lasted 38 minutes.", "A day on Venus is longer than a year on Venus.", "Honey never spoils.", "Bananas are slightly radioactive.", "Cows have best friends."];
@@ -337,6 +392,12 @@
             const color3 = getRandomColor();
             heroSection.style.background = `linear-gradient(to right, ${color1}, ${color2}, ${color3})`;
         }
+
+        function toggleTheme() {
+            document.body.classList.toggle("dark");
+        }
+
+        themeToggle.addEventListener("click", toggleTheme);
 
         // Load lines progressively
         loadLines();
