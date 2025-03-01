@@ -6,51 +6,78 @@
     <title>Fun Lines</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
         body.dark {
             background-color: #1f2937;
             color: #e5e7eb;
         }
+
         body.dark nav {
             background-color: #1f2937;
             color: #e5e7eb;
         }
+
         body.dark .line {
             border-bottom-color: #4b5563;
         }
+
         body.dark .line:hover {
             background-color: #374151;
         }
+
         body.dark .highlight {
             background-color: #4b5563;
         }
+
         body.dark .btn {
             background-color: #3b82f6;
             border-color: #3b82f6;
         }
+
         body.dark .btn:hover {
             background-color: #2563eb;
             border-color: #2563eb;
         }
+
         body.dark .progress-bar {
             background-color: #4b5563;
         }
+
         body.dark .progress {
             background-color: #3b82f6;
         }
+
         body.dark .modal-content, body.dark .fact-box {
             background-color: #1f2937;
             color: #e5e7eb;
         }
+
         body.dark .close {
             color: #e5e7eb;
         }
+
         body.dark .theme-toggle {
             background-color: #ffffff;
             color: #1f2937;
         }
+
         body.dark .theme-toggle:hover {
             background-color: #e5e7eb;
         }
+
+        body.dark #lines-container {
+            background-color: #1f2937;
+            border: 5px solid;
+            border-image: linear-gradient(45deg, #ff6f61, #f0c27b, #4d9f0c, #374c89, #9e43a2) 1;
+            border-radius: 15px; /* Rounded corners */
+        }
+
         .line {
             padding: 12px;
             border-bottom: 1px solid #d1d5db;
@@ -61,17 +88,21 @@
             align-items: center;
             justify-content: space-between;
         }
+
         .line:hover {
             background-color: #f3f4f6;
             transform: scale(1.02);
         }
+
         .highlight {
             background-color: #fef3c7;
             font-weight: bold;
         }
+
         .hidden {
             display: none;
         }
+
         .btn {
             padding: 8px 16px;
             border-radius: 4px;
@@ -81,33 +112,40 @@
             color: white;
             border: 1px solid #007bff;
         }
+
         .btn:hover {
             background-color: #0056b3;
             border-color: #0056b3;
             transform: scale(1.05);
         }
+
         .progress-bar {
             height: 8px;
             background-color: #e5e7eb;
             border-radius: 4px;
             overflow: hidden;
         }
+
         .progress {
             height: 100%;
             background-color: #10b981;
             width: 0;
             transition: width 0.3s ease;
         }
+
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
+
         .no-scrollbar {
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
         .tooltip {
             position: relative;
         }
+
         .tooltip .tooltiptext {
             visibility: hidden;
             width: 120px;
@@ -124,15 +162,18 @@
             opacity: 0;
             transition: opacity 0.3s;
         }
+
         .tooltip:hover .tooltiptext {
             visibility: visible;
             opacity: 1;
         }
+
         .animated-icon {
             font-size: 1.5rem;
             margin-left: 10px;
             animation: bounce 1s infinite;
         }
+
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {
                 transform: translateY(0);
@@ -144,6 +185,16 @@
                 transform: translateY(-5px);
             }
         }
+
+        nav {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+
+        body.dark nav {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -155,6 +206,7 @@
             overflow: auto;
             background-color: rgba(0, 0, 0, 0.5);
         }
+
         .modal-content {
             background-color: #fff;
             margin: 15% auto;
@@ -168,10 +220,12 @@
             transform: translateY(-20px);
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
+
         .modal-content.show {
             opacity: 1;
             transform: translateY(0);
         }
+
         .fact-box {
             position: fixed;
             bottom: 20px;
@@ -184,36 +238,51 @@
             transform: translateY(20px);
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
+
         .fact-box.show {
             opacity: 1;
             transform: translateY(0);
         }
+
         .close {
             color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
+
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
         }
+
         .theme-toggle {
-            margin-left: 16px;
+            margin-left: auto;
             padding: 8px;
             border-radius: 4px;
-            background-color: #007bff;
-            color: white;
+            background-color: #ffffff;
+            color: #1f2937;
             border: none;
             cursor: pointer;
             font-size: 1.2rem;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, color 0.3s;
         }
+
         .theme-toggle:hover {
-            background-color: #0056b3;
+            background-color: #e5e7eb;
         }
+
+        body.dark .theme-toggle {
+            background-color: #1f2937;
+            color: #ffffff;
+        }
+
+        body.dark .theme-toggle:hover {
+            background-color: #374151;
+        }
+
         #confetti-canvas {
             position: fixed;
             top: 0;
@@ -236,7 +305,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="h-screen flex items-center justify-center text-white text-center shadow-xl" id="hero">
+    <section class="h-screen flex items-center justify-center text-white text-center shadow-xl transition-colors duration-300" id="hero">
         <div>
             <h2 class="text-5xl font-bold">Fun Interactive Experience</h2>
             <p class="mt-4 text-xl">Scroll down to explore 500+ lines of engaging content!</p>
@@ -288,7 +357,7 @@
         let confettiAnimation;
 
         const secrets = ["Hidden Treasure!", "Secret Code: 42", "Easter Egg Found!", "Lucky Number: 7", "Bonus Points!", "Mystery Solved!", "Hidden Feature Unlocked!", "You've Discovered Magic!", "Special Message!", "Golden Line!"];
-        const facts = ["The shortest war in history lasted 38 minutes.", "A day on Venus is longer than a year on Venus.", "Honey never spoils.", "Bananas are slightly radioactive.", "Cows have best friends."];
+        const facts = ["The shortest war in history lasted 38 minutes.", "A day on Venus is longer than a year on Venus.", "Honey never spoils.", "Bananas are slightly radioactive.", "Cows have best friends.", "The Eiffel Tower can be 15 cm taller during the summer due to the expansion of the iron on hot days.", "A cloud of underground bacteria in New Mexico is as big as the state of Rhode Island."];
         const jokes = ["Why don't scientists trust atoms? Because they make up everything!", "What do you call fake spaghetti? An impasta.", "How does the moon cut his hair? Eclipse it.", "What do you call a can opener that doesn't work? A can't opener.", "How many tickles does it take to make an octopus laugh? Ten-tickles."];
         const quotes = ["The only way to do great work is to love what you do. — Steve Jobs", "In three words I can sum up everything I've learned about life: it goes on. — Robert Frost", "The purpose of our lives is to be happy. — Dalai Lama", "Life is what happens when you're busy making other plans. — John Lennon", "Get busy living or get busy dying. — Stephen King"];
 
@@ -345,8 +414,14 @@
 
         function handleLineClick(lineNumber) {
             const line = container.children[lineNumber - 1];
-            line.style.backgroundColor = getRandomColor();
-            line.style.color = "white";
+            if (lineNumber <= 100) {
+                line.style.backgroundColor = "#cd7f32"; // Bronze
+            } else if (lineNumber <= 250) {
+                line.style.backgroundColor = "#c0c0c0"; // Silver
+            } else {
+                line.style.backgroundColor = "#ffd700"; // Gold
+            }
+            line.style.color = "black";
             line.querySelector("button").innerText = "Clicked!";
         }
 
@@ -408,9 +483,9 @@
         };
 
         function setRandomGradient() {
-            const color1 = getRandomColor();
-            const color2 = getRandomColor();
-            const color3 = getRandomColor();
+            const color1 = "#6a11cb"; // Darker purple
+            const color2 = "#2575fc"; // Darker blue
+            const color3 = "#2a9d8f"; // Darker teal
             heroSection.style.background = `linear-gradient(to right, ${color1}, ${color2}, ${color3})`;
         }
 
@@ -430,11 +505,11 @@
             for (let i = 0; i < confettiCount; i++) {
                 const confetti = {
                     x: Math.random() * confettiCanvas.width,
-                    y: Math.random() * confettiCanvas.height,
+                    y: confettiCanvas.height, // Start from the bottom
                     size: Math.random() * 5 + 2,
                     color: confettiColors[Math.floor(Math.random() * confettiColors.length)],
                     velocityX: (Math.random() - 0.5) * 3,
-                    velocityY: (Math.random() - 0.5) * 3
+                    velocityY: -(Math.random() * 5 + 5) // Move upwards
                 };
                 confettiArray.push(confetti);
             }
@@ -448,7 +523,7 @@
 
                     if (confetti.y > confettiCanvas.height) {
                         confetti.y = 0;
-                        confetti.velocityY = (Math.random() - 0.5) * 3;
+                        confetti.velocityY = -(Math.random() * 5 + 5);
                     }
 
                     confettiCtx.fillStyle = confetti.color;
